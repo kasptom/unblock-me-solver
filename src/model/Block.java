@@ -14,6 +14,13 @@ public class Block {
         this.position = position;
     }
 
+    public Block(Block block) {
+        ID = block.ID;
+        type = block.type;
+        size = block.size;
+        position = new Position(block.position);
+    }
+
     public int getID() {
         return ID;
     }

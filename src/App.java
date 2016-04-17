@@ -10,8 +10,9 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
         List<Block> blocks = SimpleGenerator.generate();
-        GameBoard gameBoard = new GameBoard(blocks, blocks.get(0));
+        GameBoard gameBoard = new GameBoard(blocks);
 
         gameBoard.printDump();
+        System.out.println(gameBoard.canMove(gameBoard.getBlocks().get(4), 1));
     }
 }
