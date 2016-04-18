@@ -112,8 +112,12 @@ public class GameBoard {
         }
     }
 
-    public boolean move(Block block, int step) {
-
-        return false;
+    public void move(Block block, int step) {
+        Position position = block.getPosition();
+        BlockType blockType = block.getType();
+        if( blockType == BlockType.HORIZONTAL)
+            position.setPosX(position.getPosX() + step);
+        else if( blockType == BlockType.VERTICAL)
+            position.setPosY(position.getPosY() + step);
     }
 }
