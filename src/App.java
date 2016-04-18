@@ -13,8 +13,10 @@ public class App {
         List<Block> blocks = SimpleGenerator.generate();
         GameBoard gameBoard = new GameBoard(blocks);
 
+
+//        gameBoard.move(gameBoard.getBlocks().get(2), 1);
 //        gameBoard.printDump();
-//        System.out.println(gameBoard.canMove(gameBoard.getBlocks().get(2), 1));
+//        System.out.println(gameBoard.canMove(gameBoard.getBlocks().get(2), -3));
 
         BruteSolver solver = new BruteSolver(gameBoard);
         solver.solve();

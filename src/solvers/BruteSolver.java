@@ -56,21 +56,27 @@ public class BruteSolver {
                     for (int step = 1; gameBoard.canMove(block, step); step++) {
                         GameBoard newBoard = new GameBoard(gameBoard);
                         newBoard.move(newBoard.getBlocks().get(block.getID()), step);
-                        System.out.println("Dodaje! [" + block.getID() + ", " + step + "]\n");
+                        System.out.println("Dodaje! [" + block.getID() + ", " + step + "]");
                         steps.push(new SolutionStep(block.getID(), step));
-                        solveStep(newBoard, 0);
+                        if (solveStep(newBoard, 0)) {
+                            return true;
+                        }
                     }
 
 
                     for (int step = -1; gameBoard.canMove(block, step); step--) {
                         GameBoard newBoard = new GameBoard(gameBoard);
                         newBoard.move(newBoard.getBlocks().get(block.getID()), step);
-                        System.out.println("Dodaje! [" + block.getID() + ", " + step + "]\n");
+                        System.out.println("Dodaje! [" + block.getID() + ", " + step + "]");
                         steps.push(new SolutionStep(block.getID(), step));
                         if (newBoard.canMove(newBoard.getBlocks().get(block.getID()), step - 1)) {
-                            solveStep(newBoard, 0);
+                            if (solveStep(newBoard, 0)) {
+                                return true;
+                            }
                         } else {
-                            solveStep(newBoard, block.getID());
+                            if (solveStep(newBoard, block.getID())) {
+                                return true;
+                            }
                         }
                     }
                 }
