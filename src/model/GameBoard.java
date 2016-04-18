@@ -43,7 +43,7 @@ public class GameBoard {
             System.arraycopy(gameBoard.board[i], 0, board[i], 0, SIZE);
         }
 
-        for (Map.Entry<Integer, Block> entry: gameBoard.blocks.entrySet()) {
+        for (Map.Entry<Integer, Block> entry : gameBoard.blocks.entrySet()) {
             blocks.put(entry.getKey(), new Block(entry.getValue()));
         }
     }
@@ -72,9 +72,10 @@ public class GameBoard {
 
         if (block.getType() == BlockType.HORIZONTAL) {
             posY = block.getPosition().getPosY();
-            posX = block.getPosition().getPosX() + block.getSize() + step - 1;
+            posX = (step >= 0 ? block.getPosition().getPosX() + block.getSize() + step - 1 : block.getPosition().getPosX() + step);
 
-            if(posX >= SIZE || posX < 0) {
+
+            if (posX >= SIZE || posX < 0) {
                 return false;
             }
 
@@ -86,9 +87,9 @@ public class GameBoard {
             return true;
         } else {
             posX = block.getPosition().getPosX();
-            posY = block.getPosition().getPosY() + block.getSize() + step - 1;
+            posY = (step >= 0 ? block.getPosition().getPosY() + block.getSize() + step - 1 : block.getPosition().getPosY() + step);
 
-            if(posY >= SIZE || posY < 0) {
+            if (posY >= SIZE || posY < 0) {
                 return false;
             }
 
@@ -115,9 +116,9 @@ public class GameBoard {
     public void move(Block block, int step) {
         Position position = block.getPosition();
         BlockType blockType = block.getType();
-        if( blockType == BlockType.HORIZONTAL)
+        if (blockType == BlockType.HORIZONTAL)
             position.setPosX(position.getPosX() + step);
-        else if( blockType == BlockType.VERTICAL)
+        else if (blockType == BlockType.VERTICAL)
             position.setPosY(position.getPosY() + step);
     }
 }
