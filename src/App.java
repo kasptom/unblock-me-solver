@@ -1,5 +1,6 @@
 import model.Block;
 import model.GameBoard;
+import solvers.BruteSolver;
 import solvers.generator.SimpleGenerator;
 
 import java.util.List;
@@ -12,7 +13,11 @@ public class App {
         List<Block> blocks = SimpleGenerator.generate();
         GameBoard gameBoard = new GameBoard(blocks);
 
-        gameBoard.printDump();
-        System.out.println(gameBoard.canMove(gameBoard.getBlocks().get(4), 1));
+//        gameBoard.printDump();
+//        System.out.println(gameBoard.canMove(gameBoard.getBlocks().get(2), 1));
+
+        BruteSolver solver = new BruteSolver(gameBoard);
+        solver.solve();
+        System.out.println(solver.getSteps());
     }
 }
