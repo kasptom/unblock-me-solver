@@ -116,9 +116,17 @@ public class GameBoard {
     public void move(Block block, int step) {
         Position position = block.getPosition();
         BlockType blockType = block.getType();
-        if (blockType == BlockType.HORIZONTAL)
+        if (blockType == BlockType.HORIZONTAL) {
             position.setPosX(position.getPosX() + step);
-        else if (blockType == BlockType.VERTICAL)
+            for (int j = 0, pos = block.getPosition().getPosX(); j < block.getSize(); j++, pos++) {
+                board[block.getPosition().getPosY()][pos] = block.getID();
+            }
+        }
+        else if (blockType == BlockType.VERTICAL) {
             position.setPosY(position.getPosY() + step);
+            for (int j = 0, pos = block.getPosition().getPosY(); j < block.getSize(); j++, pos++) {
+                board[pos][block.getPosition().getPosX()] = block.getID();
+            }
+        }
     }
 }
