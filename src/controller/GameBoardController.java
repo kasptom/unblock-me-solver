@@ -13,8 +13,7 @@ import solvers.BruteSolver;
 import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
 
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Tomasz Kasprzyk on 2016-04-19.
@@ -25,7 +24,7 @@ public class GameBoardController implements EventHandler<ActionEvent>{
     private Button[][] buttons;
     private Button nextButton;
     private Button prevButton;
-    private int[][] board;
+    GameBoard gameBoard;
     Image imageRedBlock = new Image("file:res/red.png");
     Image imageGreenBlock = new Image("file:res/green.png");
     Image imageGrayBlock = new Image("file:res/gray.png");
@@ -42,12 +41,13 @@ public class GameBoardController implements EventHandler<ActionEvent>{
                                                                             BackgroundRepeat.NO_REPEAT,
                                                                             BackgroundPosition.DEFAULT,
                                                                             BackgroundSize.DEFAULT);
-    Deque<SolutionStep> steps;
+    ArrayList<SolutionStep> steps;
+    int currentStep = -1;
 
     public GameBoardController(){
         List<Block> blocks = SimpleGenerator.generate();
         GameBoard gameBoard = new GameBoard(blocks);
-        board = gameBoard.getBoard();
+        this.gameBoard = new GameBoard(blocks);
         updateGUI();
 //        gameBoard.move(gameBoard.getBlocks().get(2), 1);
 //        gameBoard.printDump();
@@ -55,8 +55,9 @@ public class GameBoardController implements EventHandler<ActionEvent>{
 
         BruteSolver solver = new BruteSolver(gameBoard);
         solver.solve();
-        System.out.println(solver.getSteps());
-        steps = solver.getSteps();
+        steps = new ArrayList(solver.getSteps());
+        Collections.reverse(steps);
+        System.out.println(steps);
     }
 
     public void handle(ActionEvent event) {
@@ -76,21 +77,39 @@ public class GameBoardController implements EventHandler<ActionEvent>{
                 }
             }
         if(event.getSource() == nextButton){
-
+            nextStep();
         }
         if(event.getSource() == prevButton){
-
+            previousStep();
         }
     }
 
-    private void moveBlocks(){
+    private void nextStep(){
+        currentStep++;
+        if( currentStep == steps.size()) {
+            currentStep = steps.size()-1;
+            return;
+        }
+        System.out.println(steps.get(currentStep));
+        gameBoard.move(gameBoard.getBlocks().get(steps.get(currentStep).getBlockId()), steps.get(currentStep).getStep());
+        updateGUI();
+    }
+    private void previousStep(){
 
+        if( currentStep == -1) {
+            return;
+        }
+        System.out.println(steps.get(currentStep));
+        gameBoard.move(gameBoard.getBlocks().get(steps.get(currentStep).getBlockId()), -steps.get(currentStep).getStep());
+        currentStep--;
+        updateGUI();
     }
 
     private void updateGUI(){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                int[][] board = gameBoard.getBoard();
                 try{
                     for(int j=0; j<ySize; j++){
                         for(int i=0; i<xSize; i++){
@@ -104,6 +123,7 @@ public class GameBoardController implements EventHandler<ActionEvent>{
                             }
                             if(board[j][i] == 0){
                                 buttons[j][i].setBackground(new Background(backgroundGray));
+                                buttons[j][i].setText(null);
                             }
                         }
                     }
