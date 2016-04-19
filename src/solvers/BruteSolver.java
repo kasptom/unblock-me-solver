@@ -29,7 +29,7 @@ public class BruteSolver {
     }
 
     private boolean solveStep(GameBoard gameBoard, int lastBlockID) {
-
+        System.out.println(steps);
         gameBoard.printDump();
         // Check if game is already finished
         if (gameBoard.isFinished()) {
@@ -48,11 +48,15 @@ public class BruteSolver {
         if (gameBoard.canMove(gameBoard.getBlocks().get(1), 1)) {
             GameBoard newBoard = new GameBoard(gameBoard);
             newBoard.move(newBoard.getBlocks().get(1), 1);
-            return solveStep(newBoard, 0);
+            System.out.println("Dodaje! [" + newBoard.getBlocks().get(1).getID() + ", " + 1 + "]");
+            steps.push(new SolutionStep(newBoard.getBlocks().get(1).getID(), 1));
+            if(solveStep(newBoard, 0)) {
+                return true;
+            }
         } else {
             // If something is blocking
             for (Block block : gameBoard.getBlocks().values()) {
-                if (block.getID() != 0 && block.getID() != lastBlockID) {
+                if (block.getID() != 1 && block.getID() != lastBlockID) {
                     for (int step = 1; gameBoard.canMove(block, step); step++) {
                         GameBoard newBoard = new GameBoard(gameBoard);
                         newBoard.move(newBoard.getBlocks().get(block.getID()), step);
@@ -86,6 +90,9 @@ public class BruteSolver {
             steps.pop();
             return false;
         }
+        System.out.println("Zdejmuje!");
+        steps.pop();
+        return false;
     }
 
     private void addCombination(GameBoard board) {

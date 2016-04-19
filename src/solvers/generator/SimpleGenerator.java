@@ -14,7 +14,9 @@ public class SimpleGenerator {
         blocks.add(new Block(2, BlockType.VERTICAL, 2, new Position(2, 1)));
         blocks.add(new Block(3, BlockType.HORIZONTAL, 2, new Position(2, 0)));
         blocks.add(new Block(4, BlockType.HORIZONTAL, 2, new Position(2, 4)));
-
+        blocks.add(new Block(5, BlockType.HORIZONTAL, 2, new Position(4, 0)));
+        blocks.add(new Block(6, BlockType.VERTICAL, 2, new Position(4, 1)));
+        blocks.add(new Block(7, BlockType.VERTICAL, 2, new Position(4, 3)));
 
         return blocks;
     }
