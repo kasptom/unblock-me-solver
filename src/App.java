@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class App extends Application {
     private Stage primaryStage;
-    private Deque<SolutionStep> steps;
-    GameBoardController controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
