@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GameBoard {
-    private static final int SIZE = 6;
-    private static final int SOLUTION_ROW = 2;
+    public static final int SIZE = 6;
+    public static final int SOLUTION_ROW = 2;
     private int[][] board;
     private Map<Integer, Block> blocks;
 
@@ -43,7 +43,8 @@ public class GameBoard {
             System.arraycopy(gameBoard.board[i], 0, board[i], 0, SIZE);
         }
 
-        for (Map.Entry<Integer, Block> entry: gameBoard.blocks.entrySet()) {
+        blocks = new HashMap<>(gameBoard.blocks.size());
+        for (Map.Entry<Integer, Block> entry : gameBoard.blocks.entrySet()) {
             blocks.put(entry.getKey(), new Block(entry.getValue()));
         }
     }
@@ -52,6 +53,9 @@ public class GameBoard {
         return blocks;
     }
 
+    public int[][] getBoard() {
+        return board;
+    }
 
     public void printDump() {
         for (int i = 0; i < SIZE; i++) {
@@ -60,11 +64,13 @@ public class GameBoard {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public boolean canMove(Block block, int step) {
         int posX;
         int posY;
+        boolean isFoward = step < 0 ? false : true;
 
         if (step == 0) {
             return true;
@@ -72,29 +78,47 @@ public class GameBoard {
 
         if (block.getType() == BlockType.HORIZONTAL) {
             posY = block.getPosition().getPosY();
-            posX = block.getPosition().getPosX() + block.getSize() + step - 1;
+            posX = (step >= 0 ? block.getPosition().getPosX() + block.getSize() + step - 1 : block.getPosition().getPosX() + step);
 
-            if(posX >= SIZE || posX < 0) {
+            if (posX >= SIZE || posX < 0) {
                 return false;
             }
 
-            for (int i = block.getPosition().getPosX() + 1; i <= posX; i++) {
-                if (board[posY][posX] != 0) {
-                    return false;
+            if (isFoward) {
+                for (int i = block.getPosition().getPosX() + block.getSize(); i <= posX; i++) {
+                    if (board[posY][i] != 0) {
+                        return false;
+                    }
+                }
+            } else {
+                for (int i = block.getPosition().getPosX() - 1; i >= posX; i--) {
+                    if (board[posY][posX] != 0) {
+                        return false;
+                    }
                 }
             }
+
+
             return true;
         } else {
             posX = block.getPosition().getPosX();
-            posY = block.getPosition().getPosY() + block.getSize() + step - 1;
+            posY = (step >= 0 ? block.getPosition().getPosY() + block.getSize() + step - 1 : block.getPosition().getPosY() + step);
 
-            if(posY >= SIZE || posY < 0) {
+            if (posY >= SIZE || posY < 0) {
                 return false;
             }
 
-            for (int i = block.getPosition().getPosY() + 1; i <= posY; i++) {
-                if (board[posY][posX] != 0) {
-                    return false;
+            if (isFoward) {
+                for (int i = block.getPosition().getPosY() + block.getSize(); i <= posY; i++) {
+                    if (board[i][posX] != 0) {
+                        return false;
+                    }
+                }
+            } else {
+                for (int i = block.getPosition().getPosY() - 1; i >= posY; i--) {
+                    if (board[i][posX] != 0) {
+                        return false;
+                    }
                 }
             }
             return true;
@@ -112,8 +136,27 @@ public class GameBoard {
         }
     }
 
-    public boolean move(Block block, int step) {
+    public void move(Block block, int step) {
+        Position position = block.getPosition();
+        BlockType blockType = block.getType();
+        if (blockType == BlockType.HORIZONTAL) {
+            for (int i = 0, pos = block.getPosition().getPosX(); i < block.getSize(); i++, pos++) {
+                board[block.getPosition().getPosY()][pos] = 0;
+            }
 
-        return false;
+            position.setPosX(position.getPosX() + step);
+            for (int j = 0, pos = block.getPosition().getPosX(); j < block.getSize(); j++, pos++) {
+                board[block.getPosition().getPosY()][pos] = block.getID();
+            }
+        } else if (blockType == BlockType.VERTICAL) {
+            for (int i = 0, pos = block.getPosition().getPosY(); i < block.getSize(); i++, pos++) {
+                board[pos][block.getPosition().getPosX()] = 0;
+            }
+
+            position.setPosY(position.getPosY() + step);
+            for (int j = 0, pos = block.getPosition().getPosY(); j < block.getSize(); j++, pos++) {
+                board[pos][block.getPosition().getPosX()] = block.getID();
+            }
+        }
     }
 }
