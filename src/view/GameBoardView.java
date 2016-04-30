@@ -1,19 +1,17 @@
 package view;
 
 import controller.GameBoardController;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-
-import static javafx.application.Application.launch;
+import javafx.scene.paint.Color;
 
 /**
  * Created by Tomasz Kasprzyk on 2016-04-19.
@@ -43,6 +41,7 @@ public class GameBoardView {
         gameBoardController = new GameBoardController();
 
         mainLayout = new BorderPane();
+        mainLayout.setBackground(new Background(new BackgroundFill(Color.DARKKHAKI, null, null)));
         GridPane layout = new GridPane();
         GridPane layout2 = new GridPane();  //opponents layout
 

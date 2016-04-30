@@ -5,8 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import model.Block;
 import model.GameBoard;
 import solvers.BruteSolver;
@@ -21,6 +21,11 @@ import java.util.*;
 public class GameBoardController implements EventHandler<ActionEvent>{
     private static int xSize = 6;
     private static int ySize = 6;
+    private static double colors[][] = {
+            {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 1.0, 0.0}, {0.0, 1.0, 1.0}, {1.0, 0.0, 1.0},
+            {0.5, 0.5, 0.0}, {0.0, 0.5, 0.5}, {0.5, 0.0, 0.5}, {1.0, 0.5, 0.0}, {0.0, 1.0, 0.5}, {1.0, 0.0, 0.5},
+            {0.75, 0.25, 0.0}, {0.0, 0.25, 0.75}, {0.75, 0.0, 0.25}, {0.5, 1.0, 0.0}, {0.0, 0.5, 1.0}, {0.5, 0.0, 1.0},
+    };
     private Button[][] buttons;
     private Button nextButton;
     private Button prevButton;
@@ -118,7 +123,15 @@ public class GameBoardController implements EventHandler<ActionEvent>{
                                 buttons[j][i].setText("1");
                             }
                             if(board[j][i] > 1){
-                                buttons[j][i].setBackground(new Background(backgroundGreen));
+                               // buttons[j][i].setBackground(new Background(backgroundGreen));
+                                /*long hue = (20 + (board[j][i]*20)) % 360;
+                                double brh = 0.5 + 0.5*(board[j][i]%2);
+                                buttons[j][i].setBackground(new Background(new BackgroundFill(Color.hsb(hue ,1,brh), null, null)));*/
+                                int x =board[j][i]-1;
+                                double r = colors[x][0];
+                                double g = colors[x][1];
+                                double b = colors[x][2];
+                                buttons[j][i].setBackground(new Background(new BackgroundFill(Color.color(r ,g, b), null, null)));
                                 buttons[j][i].setText(String.valueOf(board[j][i]));
                             }
                             if(board[j][i] == 0){

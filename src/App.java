@@ -3,17 +3,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Block;
-import model.GameBoard;
-import solvers.BruteSolver;
-import solvers.SolutionStep;
-import solvers.generator.SimpleGenerator;
 import view.GameBoardView;
-
 import java.io.IOException;
-import java.util.Deque;
-import java.util.List;
-
 /**
  * Created by throzendar on 16/04/16.
  */
