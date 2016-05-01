@@ -1,7 +1,5 @@
 package solvers;
 
-import model.Block;
-
 /**
  * Created by throzendar on 16/04/16.
  */
