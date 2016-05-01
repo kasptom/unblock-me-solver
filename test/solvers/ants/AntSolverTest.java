@@ -1,4 +1,4 @@
-package solvers.ants.test;
+package solvers.ants;
 
 import static org.junit.Assert.*;
 
