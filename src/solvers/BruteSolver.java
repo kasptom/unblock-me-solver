@@ -8,8 +8,6 @@ import java.util.*;
 /**
  * Created by throzendar on 16/04/16.
  */
-
-
 public class BruteSolver {
 
     /**
@@ -101,7 +99,8 @@ public class BruteSolver {
             return false;
         }
         System.out.println("Zdejmuje!");
-        steps.pop();
+        if(!steps.isEmpty())
+            steps.pop();
         return false;
     }
 
