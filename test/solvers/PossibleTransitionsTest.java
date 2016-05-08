@@ -1,5 +1,6 @@
 package solvers;
 
+import model.Block;
 import model.GameBoard;
 import org.junit.Assert;
 import solvers.generator.SimpleGenerator;
@@ -11,10 +12,25 @@ public class PossibleTransitionsTest {
     public void testNeighbourhood() {
         GameBoard gb = new GameBoard(SimpleGenerator.generate());
         Map<GameBoard, SolutionStep> steps = gb.getPossibleTransitions();
+        for(Map.Entry<GameBoard, SolutionStep> entry : steps.entrySet()) {
+            System.out.println(entry.getValue());
+        }
         Assert.assertFalse(steps.isEmpty());
         Assert.assertEquals(6, steps.size());
-        for(Map.Entry<GameBoard, SolutionStep> entry : steps.entrySet()) {
-            entry.getKey().printDump();
-        }
+    }
+
+    @org.junit.Test
+    public void testTransitionByTwo() {
+        GameBoard gb = new GameBoard(SimpleGenerator.generate());
+        Map <Integer, Block> list = gb.getBlocks();
+        Block b3 = list.get(3);
+        System.out.println("Block3: {\n" +
+                "ID: " + b3.getID() + "\n" +
+                "Position: (" + b3.getPosition().getPosX() + ", " + b3.getPosition().getPosY() + ")\n" +
+                "Size: " + b3.getSize() + "\n" +
+                "Type: " + b3.getType() + "\n}");
+        boolean canMove = gb.canMove(b3, -2);
+        Assert.assertTrue(canMove);
+        System.out.println("[DD]canMove: " + canMove);
     }
 }

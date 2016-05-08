@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class GameBoard {
+    public static final boolean DEBUG = true;
     public static final int SIZE = 6;
     public static final int SOLUTION_ROW = 2;
+
     private int[][] board;
     private Map<Integer, Block> blocks;
 
@@ -48,7 +50,7 @@ public class GameBoard {
 
         blocks = new HashMap<>(gameBoard.blocks.size());
         for (Map.Entry<Integer, Block> entry : gameBoard.blocks.entrySet()) {
-            blocks.put(entry.getKey(), new Block(entry.getValue()));
+            blocks.put(new Integer(entry.getKey()), new Block(entry.getValue()));
         }
     }
 
@@ -71,6 +73,8 @@ public class GameBoard {
     }
 
     public boolean canMove(Block block, int step) {
+        if(DEBUG)
+            System.out.println("[DD]GameBoard.canMove(" + block.getID() + ", " + step + ");");
         int posX;
         int posY;
         boolean isFoward = step < 0 ? false : true;
@@ -140,6 +144,8 @@ public class GameBoard {
     }
 
     public void move(Block block, int step) {
+        if(DEBUG)
+            System.out.println("[DD]GameBoard.move(" + block.getID() + ", " + step + ")");
         Position position = block.getPosition();
         BlockType blockType = block.getType();
         if (blockType == BlockType.HORIZONTAL) {
@@ -170,16 +176,25 @@ public class GameBoard {
     public Map<GameBoard, SolutionStep> getPossibleTransitions() {
         HashMap<GameBoard, SolutionStep> list = new HashMap<>();
         for(Map.Entry<Integer, Block> entry : blocks.entrySet()) {
+            Block block = entry.getValue();
             int step = 1;
-            while(canMove(entry.getValue(), step)) {
-                list.put(createTransition(entry.getValue(), step), new SolutionStep(entry.getKey(), step));
+            while(canMove(block, step)) {
+                if(DEBUG)
+                    System.out.println("[DD]canMove: true");
+                list.put(createTransition(block, step), new SolutionStep(entry.getKey(), step));
                 step++;
             }
+            if(DEBUG)
+                System.out.println("[DD]canMove: false");
             step = -1;
-            while(canMove(entry.getValue(), step)) {
-                list.put(createTransition(entry.getValue(), step), new SolutionStep(entry.getKey(), step));
+            while(canMove(block, step)) {
+                if(DEBUG)
+                    System.out.println("[DD]canMove: true");
+                list.put(createTransition(block, step), new SolutionStep(entry.getKey(), step));
                 step--;
             }
+            if(DEBUG)
+                System.out.println("[DD]canMove: false");
         }
         return list;
     }
