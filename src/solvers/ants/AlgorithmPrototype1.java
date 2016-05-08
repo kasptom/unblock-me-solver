@@ -23,6 +23,7 @@ public class AlgorithmPrototype1 {
     }
 
     public Ant run(long trials) {
+        System.out.println("Shall unleash " + ANT_QUANTITY + " ants " + trials + " times.");
         timestamp = 0L;
         Ant result = null;
         while(timestamp < trials) {

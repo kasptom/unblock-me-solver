@@ -63,6 +63,9 @@ class GBPair {
         if(((GBPair) a).gb1.equals(gb1))
             if(((GBPair) a).gb2.equals(gb2))
                 return true;
+        if(((GBPair) a).gb2.equals(gb1))
+            if(((GBPair) a).gb1.equals(gb2))
+                return true;
         return false;
     }
     @Override

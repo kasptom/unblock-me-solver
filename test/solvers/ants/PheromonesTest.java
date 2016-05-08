@@ -62,4 +62,39 @@ public class PheromonesTest {
         Assert.assertNotNull(received);
         System.out.println(received.get(timestamp));
     }
+
+    @org.junit.Test
+    public void checkReverseIdenticalItems() {
+        Pheromones p = new Pheromones();
+        long timestamp = 0;
+        List<Block> list = SimpleGenerator.generate();
+        GameBoard gb1 = new GameBoard(list);
+        GameBoard gb2 = new GameBoard(list);
+        list.remove(0);
+        GameBoard gb3 = new GameBoard(list);
+
+        p.check(timestamp, gb1, gb3);
+
+        Pheromone received = p.get(gb3, gb2);
+        Assert.assertNotNull(received);
+        System.out.println(received.get(timestamp));
+    }
+
+    @org.junit.Test
+    public void checkIdenticalItemsConstructedIndependently() {
+        Pheromones p = new Pheromones();
+        long timestamp = 0;
+        List<Block> list = SimpleGenerator.generate();
+        GameBoard gb1 = new GameBoard(list);
+        list = SimpleGenerator.generate();
+        GameBoard gb2 = new GameBoard(list);
+        list.remove(0);
+        GameBoard gb3 = new GameBoard(list);
+
+        p.check(timestamp, gb1, gb3);
+
+        Pheromone received = p.get(gb2, gb3);
+        Assert.assertNotNull(received);
+        System.out.println(received.get(timestamp));
+    }
 }

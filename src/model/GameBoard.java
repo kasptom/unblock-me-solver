@@ -2,16 +2,13 @@ package model;
 
 import solvers.SolutionStep;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameBoard {
     public static final int SIZE = 6;
     public static final int SOLUTION_ROW = 2;
 
-    private int[][] board;
+    int[][] board;
     private Map<Integer, Block> blocks;
 
     public GameBoard(List<Block> blocks) {
@@ -189,5 +186,18 @@ public class GameBoard {
         GameBoard gb = new GameBoard(this);
         gb.move(gb.getBlocks().get(blockId), step);
         return gb;
+    }
+
+    @Override
+    public boolean equals(Object a) {
+        if(!(a instanceof GameBoard))
+            return false;
+        return Arrays.deepEquals(board, ((GameBoard) a).board);
+        //return blocks.equals(((GameBoard) a).blocks);
+    }
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(board);
+        //return blocks.hashCode() + 1;
     }
 }

@@ -1,8 +1,9 @@
-package solvers;
+package model;
 
 import model.Block;
 import model.GameBoard;
 import org.junit.Assert;
+import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
 
 import java.util.HashMap;

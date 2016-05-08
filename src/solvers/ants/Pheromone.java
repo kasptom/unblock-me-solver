@@ -32,7 +32,7 @@ public class Pheromone {
      * @param timestamp timestamp of check
      * @return current value of pheromone's intensity
      */
-    public double get(long timestamp) {
+    public synchronized double get(long timestamp) {
         if(timestamp == this.timestamp) //pheromone was already refreshed
             return value;
         if(timestamp < this.timestamp) //pheromone was already refreshed in future
@@ -51,7 +51,7 @@ public class Pheromone {
      * @param value Added pheromone's intensity
      * @param timestamp timestamp of operation (for decay purposes)
      */
-    public void add(double value, long timestamp) {
+    public synchronized void add(double value, long timestamp) {
         if(timestamp == this.timestamp)
             this.value += value;
         else if (timestamp < this.timestamp)
@@ -67,7 +67,7 @@ public class Pheromone {
      * @param value pheromone's intensity
      * @param timestamp timestamp of operation
      */
-    public void set(double value, long timestamp) {
+    public synchronized void set(double value, long timestamp) {
         this.value = value;
         this.timestamp = timestamp;
     }
