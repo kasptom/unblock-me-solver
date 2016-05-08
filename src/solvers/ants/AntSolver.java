@@ -56,7 +56,8 @@ public class AntSolver{
 
     ///
     public void launchAnt(int time){
-        Ant ant = new Ant();
-        while(!ant.step());
+        //FIXME commented compile error
+        // Ant ant = new Ant();
+        //while(!ant.step());
     }
 }

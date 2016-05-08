@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,5 +159,31 @@ public class GameBoard {
                 board[pos][block.getPosition().getPosX()] = block.getID();
             }
         }
+    }
+
+    /**
+     * Creates the neighbourhood
+     * @return list of neighbouring GameBoards
+     */
+    public List<GameBoard> getPossibleTransitions() {
+        ArrayList<GameBoard> list = new ArrayList<>();
+        for(Block b : blocks.values()) {
+            int step = 1;
+            while(canMove(b, step)) {
+                list.add(createTransition(b, step));
+                step++;
+            }
+            step = -1;
+            while(canMove(b, step)) {
+                list.add(createTransition(b, step));
+                step--;
+            }
+        }
+        return list;
+    }
+    private GameBoard createTransition(Block b, int step) {
+        GameBoard gb = new GameBoard(this);
+        gb.move(b, step);
+        return gb;
     }
 }
