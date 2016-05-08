@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class GameBoard {
-    public static final boolean DEBUG = true;
     public static final int SIZE = 6;
     public static final int SOLUTION_ROW = 2;
 
@@ -73,8 +72,6 @@ public class GameBoard {
     }
 
     public boolean canMove(Block block, int step) {
-        if(DEBUG)
-            System.out.println("[DD]GameBoard.canMove(" + block.getID() + ", " + step + ");");
         int posX;
         int posY;
         boolean isFoward = step < 0 ? false : true;
@@ -144,8 +141,6 @@ public class GameBoard {
     }
 
     public void move(Block block, int step) {
-        if(DEBUG)
-            System.out.println("[DD]GameBoard.move(" + block.getID() + ", " + step + ")");
         Position position = block.getPosition();
         BlockType blockType = block.getType();
         if (blockType == BlockType.HORIZONTAL) {
@@ -179,28 +174,20 @@ public class GameBoard {
             Block block = entry.getValue();
             int step = 1;
             while(canMove(block, step)) {
-                if(DEBUG)
-                    System.out.println("[DD]canMove: true");
-                list.put(createTransition(block, step), new SolutionStep(entry.getKey(), step));
+                list.put(createTransition(block.getID(), step), new SolutionStep(entry.getKey(), step));
                 step++;
             }
-            if(DEBUG)
-                System.out.println("[DD]canMove: false");
             step = -1;
             while(canMove(block, step)) {
-                if(DEBUG)
-                    System.out.println("[DD]canMove: true");
-                list.put(createTransition(block, step), new SolutionStep(entry.getKey(), step));
+                list.put(createTransition(block.getID(), step), new SolutionStep(entry.getKey(), step));
                 step--;
             }
-            if(DEBUG)
-                System.out.println("[DD]canMove: false");
         }
         return list;
     }
-    private GameBoard createTransition(Block b, int step) {
+    private GameBoard createTransition(int blockId, int step) {
         GameBoard gb = new GameBoard(this);
-        gb.move(b, step);
+        gb.move(gb.getBlocks().get(blockId), step);
         return gb;
     }
 }

@@ -68,6 +68,8 @@ public class Ant {
     public void spread(){
         for(int i=1; i < memory.size(); i++) {
             Pheromone p = pheromones.get(memory.get(i - 1), memory.get(i));
+            if(p == null)
+                throw new RuntimeException("[EE] Ant.spread(): Failed to get pheromone!");
             p.add(PHEROMONE_FOR_ANT / memory.size(), timestamp);
         }
     }

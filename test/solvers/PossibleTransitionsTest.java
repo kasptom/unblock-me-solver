@@ -5,6 +5,7 @@ import model.GameBoard;
 import org.junit.Assert;
 import solvers.generator.SimpleGenerator;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class PossibleTransitionsTest {
@@ -32,5 +33,15 @@ public class PossibleTransitionsTest {
         boolean canMove = gb.canMove(b3, -2);
         Assert.assertTrue(canMove);
         System.out.println("[DD]canMove: " + canMove);
+    }
+
+    @org.junit.Test
+    public void testNeighbourhoodGenerationConstancy() {
+        GameBoard gb = new GameBoard(SimpleGenerator.generate());
+        int hash1 = gb.hashCode();
+        int hash2 = gb.getBlocks().hashCode();
+        gb.getPossibleTransitions();
+        Assert.assertEquals(hash1, gb.hashCode());
+        Assert.assertEquals(hash2, gb.getBlocks().hashCode());
     }
 }
