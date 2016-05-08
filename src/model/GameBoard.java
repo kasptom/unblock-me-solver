@@ -1,5 +1,7 @@
 package model;
 
+import solvers.SolutionStep;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,17 +167,17 @@ public class GameBoard {
      * Creates the neighbourhood
      * @return list of neighbouring GameBoards
      */
-    public List<GameBoard> getPossibleTransitions() {
-        ArrayList<GameBoard> list = new ArrayList<>();
-        for(Block b : blocks.values()) {
+    public Map<GameBoard, SolutionStep> getPossibleTransitions() {
+        HashMap<GameBoard, SolutionStep> list = new HashMap<>();
+        for(Map.Entry<Integer, Block> entry : blocks.entrySet()) {
             int step = 1;
-            while(canMove(b, step)) {
-                list.add(createTransition(b, step));
+            while(canMove(entry.getValue(), step)) {
+                list.put(createTransition(entry.getValue(), step), new SolutionStep(entry.getKey(), step));
                 step++;
             }
             step = -1;
-            while(canMove(b, step)) {
-                list.add(createTransition(b, step));
+            while(canMove(entry.getValue(), step)) {
+                list.put(createTransition(entry.getValue(), step), new SolutionStep(entry.getKey(), step));
                 step--;
             }
         }

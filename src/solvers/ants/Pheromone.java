@@ -1,8 +1,8 @@
 package solvers.ants;
 
 public class Pheromone {
-    public static final double DEFAULT_INITIAL_PHEROMONE = 0;
-    public static final long DEFAULT_INITIAL_TIMESTAMP = 0;
+    public static final double DEFAULT_INITIAL_PHEROMONE = 1.0;
+    public static final long DEFAULT_INITIAL_TIMESTAMP = 0L;
     public static final double DECAY_FACTOR = 0.9;
 
     /**

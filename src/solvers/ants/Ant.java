@@ -1,6 +1,7 @@
 package solvers.ants;
 
 import model.GameBoard;
+import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
 
 import java.util.*;
@@ -15,6 +16,7 @@ public class Ant {
     private GameBoard currentState;// = new GameBoard(SimpleGenerator.generate());
     private long timestamp;// = 0L;
     private List<GameBoard> memory;// = new ArrayList<>();
+    private Deque<SolutionStep> path;
     private Random random;
 
     public Ant(Pheromones pheromones, GameBoard initialState, long timestamp) {
@@ -23,30 +25,40 @@ public class Ant {
         this.memory = new ArrayList<>();
         this.pheromones = pheromones;
         this.random = new Random();
+        this.path = new ArrayDeque<>();
     }
+
+    public Deque<SolutionStep> getPath() { return path; }
 
     public boolean step(){
         if (check())
             return true;
-        List<GameBoard> steps = this.currentState.getPossibleTransitions();
+        Map<GameBoard, SolutionStep> steps = this.currentState.getPossibleTransitions();
         Map<GameBoard, Double> probabilities = new HashMap<>();
 
-        for(GameBoard step : steps)
-            probabilities.put(step, pheromones.check(timestamp, currentState, step));
+        for(Map.Entry<GameBoard, SolutionStep> step : steps.entrySet())
+            probabilities.put(step.getKey(), pheromones.check(timestamp, currentState, step.getKey()));
         memory.add(currentState);
         currentState = chooseWithProbability(probabilities);
+        path.push(steps.get(currentState));
         return false;
     }
     private GameBoard chooseWithProbability(Map<GameBoard, Double> probabilities) {
-        double sum = probabilities.values().stream().reduce((x, y) -> x+y).get();
+        //System.out.println("probs count: " + probabilities.values().size());
+        double sum = probabilities.values().stream().reduce(0.0, (x, y) -> x+y);
+        //System.out.println("sum: " + sum);
         double roll = random.nextDouble();
         roll *= sum;
         for(Map.Entry<GameBoard, Double> entry : probabilities.entrySet()) {
             roll -= entry.getValue();
-            if(roll <= 0)
+            if(roll <= 0.0)
                 return entry.getKey();
         }
-        throw new RuntimeException("There is an error in probability choosing!");
+        throw new RuntimeException("There is an error in probability choosing!\n"
+                + "or in possibleTransitions generation\n"
+                + "{\troll: " + roll + "\n"
+                + " \tprobs count: " + probabilities.values().size() + "\n"
+                + " \tsum: " + sum + "\n}");
     }
 
     public boolean check(){
@@ -55,7 +67,6 @@ public class Ant {
 
     public void spread(){
         for(int i=1; i < memory.size(); i++) {
-            //FIXME NullPointerException - how to add a new pair?
             Pheromone p = pheromones.get(memory.get(i - 1), memory.get(i));
             p.add(PHEROMONE_FOR_ANT / memory.size(), timestamp);
         }
