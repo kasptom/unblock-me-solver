@@ -56,6 +56,21 @@ class GBPair {
         this.gb1 = gb1;
         this.gb2 = gb2;
     }
+    @Override
+    public boolean equals(Object a) {
+        if(!(a instanceof GBPair))
+            return false;
+        if(((GBPair) a).gb1.equals(gb1))
+            if(((GBPair) a).gb2.equals(gb2))
+                return true;
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        int h1 = gb1.hashCode();
+        h1 += gb2.hashCode();
+        return h1;
+    }
     //public GameBoard get1() { return gb1; }
     //public GameBoard get2() { return gb2; }
 }

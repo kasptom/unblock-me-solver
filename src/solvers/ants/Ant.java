@@ -56,7 +56,8 @@ public class Ant {
     public void spread(){
         for(int i=1; i < memory.size(); i++) {
             //FIXME NullPointerException - how to add a new pair?
-            pheromones.get(memory.get(i - 1), memory.get(i)).add(PHEROMONE_FOR_ANT / memory.size(), timestamp);
+            Pheromone p = pheromones.get(memory.get(i - 1), memory.get(i));
+            p.add(PHEROMONE_FOR_ANT / memory.size(), timestamp);
         }
     }
 }
