@@ -10,10 +10,18 @@ import java.util.*;
  */
 public class BruteSolver {
 
+    /**
+     * combinations: List of already checked combinations
+     * steps:
+     */
     List<int[][]> combinations;
     Deque<SolutionStep> steps;
     GameBoard gameBoard;
 
+    /**
+     * BruteSolver constructor
+     * @param gameBoard Initial state of the game board to solve
+     */
     public BruteSolver(GameBoard gameBoard) {
         combinations = new LinkedList<>();
         steps = new ArrayDeque<>();
@@ -91,7 +99,8 @@ public class BruteSolver {
             return false;
         }
         System.out.println("Zdejmuje!");
-        steps.pop();
+        if(!steps.isEmpty())
+            steps.pop();
         return false;
     }
 

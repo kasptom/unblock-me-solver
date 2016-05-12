@@ -88,7 +88,6 @@ public class GameBoardController implements EventHandler<ActionEvent>{
             previousStep();
         }
     }
-
     private void nextStep(){
         currentStep++;
         if( currentStep == steps.size()) {
@@ -109,7 +108,6 @@ public class GameBoardController implements EventHandler<ActionEvent>{
         currentStep--;
         updateGUI();
     }
-
     private void updateGUI(){
         Platform.runLater(new Runnable() {
             @Override
@@ -148,11 +146,9 @@ public class GameBoardController implements EventHandler<ActionEvent>{
         });
 
     }
-
     public void setButtons(Button[][] buttons, Button prevButton, Button nextButton){
         this.buttons = buttons;
         this.prevButton = prevButton;
         this.nextButton = nextButton;
     }
-
 }

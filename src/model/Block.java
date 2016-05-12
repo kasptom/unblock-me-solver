@@ -7,6 +7,13 @@ public class Block {
     private int size;
     private Position position;
 
+    /**
+     *
+     * @param ID
+     * @param type
+     * @param size
+     * @param position most left-top block's part
+     */
     public Block(int ID, BlockType type, int size, Position position) {
         this.ID = ID;
         this.type = type;

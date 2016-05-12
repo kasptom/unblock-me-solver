@@ -1,16 +1,23 @@
 package model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import solvers.SolutionStep;
+
+import java.util.*;
 
 public class GameBoard {
-    public static final int SIZE = 6;
-    public static final int SOLUTION_ROW = 2;
-    private int[][] board;
+    public static int SIZE = 6;
+    //public static final int SOLUTION_ROW = 2;
+    //TODO size changing
+
+    int[][] board;
     private Map<Integer, Block> blocks;
 
     public GameBoard(List<Block> blocks) {
+        this(blocks, 6);
+    }
+
+    public GameBoard(List<Block> blocks, int size) {
+        SIZE = size;
         board = new int[SIZE][SIZE];
 
         for (int i = 0; i < SIZE; i++) {
@@ -45,7 +52,7 @@ public class GameBoard {
 
         blocks = new HashMap<>(gameBoard.blocks.size());
         for (Map.Entry<Integer, Block> entry : gameBoard.blocks.entrySet()) {
-            blocks.put(entry.getKey(), new Block(entry.getValue()));
+            blocks.put(new Integer(entry.getKey()), new Block(entry.getValue()));
         }
     }
 
@@ -158,5 +165,45 @@ public class GameBoard {
                 board[pos][block.getPosition().getPosX()] = block.getID();
             }
         }
+    }
+
+    /**
+     * Creates the neighbourhood
+     * @return list of neighbouring GameBoards
+     */
+    public Map<GameBoard, SolutionStep> getPossibleTransitions() {
+        HashMap<GameBoard, SolutionStep> list = new HashMap<>();
+        for(Map.Entry<Integer, Block> entry : blocks.entrySet()) {
+            Block block = entry.getValue();
+            int step = 1;
+            while(canMove(block, step)) {
+                list.put(createTransition(block.getID(), step), new SolutionStep(entry.getKey(), step));
+                step++;
+            }
+            step = -1;
+            while(canMove(block, step)) {
+                list.put(createTransition(block.getID(), step), new SolutionStep(entry.getKey(), step));
+                step--;
+            }
+        }
+        return list;
+    }
+    private GameBoard createTransition(int blockId, int step) {
+        GameBoard gb = new GameBoard(this);
+        gb.move(gb.getBlocks().get(blockId), step);
+        return gb;
+    }
+
+    @Override
+    public boolean equals(Object a) {
+        if(!(a instanceof GameBoard))
+            return false;
+        return Arrays.deepEquals(board, ((GameBoard) a).board);
+        //return blocks.equals(((GameBoard) a).blocks);
+    }
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(board);
+        //return blocks.hashCode() + 1;
     }
 }
