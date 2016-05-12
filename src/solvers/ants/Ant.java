@@ -44,6 +44,7 @@ public class Ant {
         return false;
     }
     private GameBoard chooseWithProbability(Map<GameBoard, Double> probabilities) {
+        //WZOREK NA PRAWDOPODOBIENSTWO
         //System.out.println("probs count: " + probabilities.values().size());
         double sum = probabilities.values().stream().reduce(0.0, (x, y) -> x+y);
         //System.out.println("sum: " + sum);
@@ -66,6 +67,7 @@ public class Ant {
     }
 
     public void spread(){
+        //ROZKLADANIE FEROMONOW
         double pheromoneAdd = PHEROMONE_FOR_ANT / memory.size();
         pheromoneAdd *= pheromoneAdd;
         for(int i=1; i < memory.size(); i++) {
