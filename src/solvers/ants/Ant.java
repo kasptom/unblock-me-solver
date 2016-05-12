@@ -73,4 +73,8 @@ public class Ant {
             p.add(PHEROMONE_FOR_ANT / memory.size(), timestamp);
         }
     }
+
+    public double solutionQuality() {
+        return 1.0 / memory.size();
+    }
 }

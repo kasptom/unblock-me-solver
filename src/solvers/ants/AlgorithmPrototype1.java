@@ -15,6 +15,11 @@ public class AlgorithmPrototype1 {
     private long timestamp;
     private ExecutorService executor;
 
+    public AlgorithmPrototype1(GameBoard initialState, Pheromones pheromones) {
+        this(initialState);
+        this.pheromones = pheromones;
+    }
+
     public AlgorithmPrototype1(GameBoard initialState) {
         this.initialState = initialState;
         this.pheromones = new Pheromones();
@@ -27,6 +32,7 @@ public class AlgorithmPrototype1 {
         timestamp = 0L;
         Ant result = null;
         while(timestamp < trials) {
+            System.out.println("Generation: " + timestamp);
             result = unleashAnthill();
             timestamp++;
         }
@@ -44,13 +50,12 @@ public class AlgorithmPrototype1 {
         }
         for (Future f : futures) {
             try {
-                f.get(1, TimeUnit.SECONDS);
+                f.get();
+                //f.get(1, TimeUnit.SECONDS);
                 System.out.print(".");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (TimeoutException e) {
                 e.printStackTrace();
             }
         }
