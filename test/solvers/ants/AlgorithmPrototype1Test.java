@@ -28,10 +28,10 @@ public class AlgorithmPrototype1Test {
             i = new GameBoard(i1);
             i1.move(i1.getBlocks().get(ss.getBlockId()), ss.getStep());
             brutallyInitiatedPheromones.check(Pheromone.DEFAULT_INITIAL_TIMESTAMP, i, i1);
-            brutallyInitiatedPheromones.get(i, i1).add(Pheromone.DEFAULT_INITIAL_PHEROMONE, Pheromone.DEFAULT_INITIAL_TIMESTAMP);
+            brutallyInitiatedPheromones.get(i, i1).add(5 * Pheromone.DEFAULT_INITIAL_PHEROMONE, Pheromone.DEFAULT_INITIAL_TIMESTAMP);
         }
         AlgorithmPrototype1 solver = new AlgorithmPrototype1(new GameBoard(SimpleGenerator.generate()), brutallyInitiatedPheromones);
-        int TRIALS = 2;
+        int TRIALS = 50;
         solver.run(TRIALS);
     }
 }

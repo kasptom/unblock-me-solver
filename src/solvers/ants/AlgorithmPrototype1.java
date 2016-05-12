@@ -8,7 +8,7 @@ import java.util.concurrent.*;
  * Created by Andrzej Duda on 2016-05-08.
  */
 public class AlgorithmPrototype1 {
-    public static final int ANT_QUANTITY = 5;
+    public static final int ANT_QUANTITY = 50;
 
     private GameBoard initialState;
     private Pheromones pheromones;
@@ -34,6 +34,7 @@ public class AlgorithmPrototype1 {
         while(timestamp < trials) {
             System.out.println("Generation: " + timestamp);
             result = unleashAnthill();
+            System.out.println("result: " + result.getPath().size());
             timestamp++;
         }
         return result;
@@ -59,9 +60,17 @@ public class AlgorithmPrototype1 {
                 e.printStackTrace();
             }
         }
-        for(Ant a : ants)
+        Ant winner = null;
+        for(Ant a : ants) {
             a.spread();
-        return ants[0];
+            if(winner == null)
+                winner = a;
+            else {
+                if(a.solutionQuality() > winner.solutionQuality())
+                    winner = a;
+            }
+        }
+        return winner;
     }
 
 

@@ -66,15 +66,24 @@ public class Ant {
     }
 
     public void spread(){
+        double pheromoneAdd = PHEROMONE_FOR_ANT / memory.size();
+        pheromoneAdd *= pheromoneAdd;
         for(int i=1; i < memory.size(); i++) {
             Pheromone p = pheromones.get(memory.get(i - 1), memory.get(i));
             if(p == null)
                 throw new RuntimeException("[EE] Ant.spread(): Failed to get pheromone!");
-            p.add(PHEROMONE_FOR_ANT / memory.size(), timestamp);
+            p.add(pheromoneAdd, timestamp);
         }
     }
 
     public double solutionQuality() {
         return 1.0 / memory.size();
+        //TODO do comparable
+    }
+
+    public void printPath() {
+        ArrayList<SolutionStep> antSteps = new ArrayList(getPath());
+        Collections.reverse(antSteps);
+        System.out.println(antSteps);
     }
 }

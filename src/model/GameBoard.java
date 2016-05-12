@@ -5,13 +5,19 @@ import solvers.SolutionStep;
 import java.util.*;
 
 public class GameBoard {
-    public static final int SIZE = 6;
-    public static final int SOLUTION_ROW = 2;
+    public static int SIZE = 6;
+    //public static final int SOLUTION_ROW = 2;
+    //TODO size changing
 
     int[][] board;
     private Map<Integer, Block> blocks;
 
     public GameBoard(List<Block> blocks) {
+        this(blocks, 6);
+    }
+
+    public GameBoard(List<Block> blocks, int size) {
+        SIZE = size;
         board = new int[SIZE][SIZE];
 
         for (int i = 0; i < SIZE; i++) {

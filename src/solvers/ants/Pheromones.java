@@ -24,9 +24,11 @@ public class Pheromones {
         Pheromone p = get(gb1, gb2);
         if(p != null)
             return p.get(timestamp);
-        p = new Pheromone(timestamp);
-        pheromones.put(new GBPair(gb1, gb2), p);
-        return p.get(timestamp);
+        synchronized (this) {
+            p = new Pheromone(timestamp);
+            pheromones.put(new GBPair(gb1, gb2), p);
+            return p.get(timestamp);
+        }
     }
 
     /**

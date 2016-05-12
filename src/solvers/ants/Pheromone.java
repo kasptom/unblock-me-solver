@@ -1,7 +1,7 @@
 package solvers.ants;
 
 public class Pheromone {
-    public static final double DEFAULT_INITIAL_PHEROMONE = 1.0;
+    public static final double DEFAULT_INITIAL_PHEROMONE = 0.1;
     public static final long DEFAULT_INITIAL_TIMESTAMP = 0L;
     public static final double DECAY_FACTOR = 0.9;
 
@@ -14,11 +14,11 @@ public class Pheromone {
      */
     private long timestamp;
 
-    public Pheromone() { new Pheromone(DEFAULT_INITIAL_PHEROMONE); }
+    public Pheromone() { this(DEFAULT_INITIAL_TIMESTAMP); }
     /**
-     * @param value Initial value of pheromone's intensity
+     * @param initialTimestamp Initial value of pheromone's intensity
      */
-    public Pheromone(double value) { new Pheromone(value, DEFAULT_INITIAL_TIMESTAMP); }
+    public Pheromone(long initialTimestamp) { this(DEFAULT_INITIAL_PHEROMONE, initialTimestamp); }
     /**
      * @param value Initial value of pheromone's intensity
      * @param initalTimestamp Timestamp of pheromone's data creation
@@ -41,9 +41,13 @@ public class Pheromone {
         return value;
     }
     private void decay(long newTimestamp) {
-        for (long timeElapsed = newTimestamp - timestamp; timeElapsed > 0; timeElapsed--)
+        for (long timeElapsed = newTimestamp - timestamp; timeElapsed > 0; timeElapsed--) {
+            //System.out.println("Pheromone.decay: " + value);
             value *= DECAY_FACTOR;
+            //System.out.println("Pheromone.decay * factor: " + value);
+        }
         timestamp = newTimestamp;
+
     }
 
     /**
