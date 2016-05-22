@@ -1,3 +1,4 @@
+import controller.GameBoardConfig;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +24,7 @@ public class App extends Application {
 
     private void initRootLayout() throws Exception {
         try {
+            GameBoardConfig config = GameBoardConfig.getInstance("res/configs/gameboard.config");
             // get layout from view
             GameBoardView gameBoardView = new GameBoardView();
             BorderPane mainLayout = gameBoardView.getMainLayout();

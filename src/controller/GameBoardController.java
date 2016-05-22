@@ -13,6 +13,7 @@ import solvers.BruteSolver;
 import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -49,10 +50,11 @@ public class GameBoardController implements EventHandler<ActionEvent>{
     ArrayList<SolutionStep> steps;
     int currentStep = -1;
 
-    public GameBoardController(){
-        List<Block> blocks = SimpleGenerator.generate();
-        GameBoard gameBoard = new GameBoard(blocks);
-        this.gameBoard = new GameBoard(blocks);
+    public GameBoardController() throws IOException {
+        //List<Block> blocks = SimpleGenerator.generate();
+        this.gameBoard = new GameBoard(GameBoardConfig.getInstance().generateInitialBoard());
+        System.out.println("GameBoardController.printDump");
+        gameBoard.printDump();
         updateGUI();
 //        gameBoard.move(gameBoard.getBlocks().get(2), 1);
 //        gameBoard.printDump();
