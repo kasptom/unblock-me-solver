@@ -49,16 +49,13 @@ public class GameBoardController implements EventHandler<ActionEvent>{
         this.gameBoard = new GameBoard(GameBoardConfig.getInstance().generateInitialBoard());
         updateGUI();
 
-
-
-
         if(GameBoardConfig.BRUTE) {
             BruteSolver solver = new BruteSolver(gameBoard);
             solver.solve();
             steps = new ArrayList(solver.getSteps());
         }else {
             Pheromones pheromones = new Pheromones();
-            AlgorithmPrototype1 solver = new AlgorithmPrototype1(new GameBoard(SimpleGenerator.generate()), pheromones);
+            AlgorithmPrototype1 solver = new AlgorithmPrototype1(new GameBoard(GameBoardConfig.getInstance().generateInitialBoard()), pheromones);
             Ant ant = solver.run(GameBoardConfig.TRIALS);
             steps = new ArrayList(ant.getPath());
         }
