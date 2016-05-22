@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class GameBoard {
-    public static int SIZE = 10;
+    public static int SIZE = 6;
     //public static final int SOLUTION_ROW = 2;
     //TODO size changing
 

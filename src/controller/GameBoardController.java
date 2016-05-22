@@ -7,13 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import model.Block;
 import model.GameBoard;
 import solvers.BruteSolver;
 import solvers.SolutionStep;
+import solvers.ants.*;
 import solvers.generator.SimpleGenerator;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -32,16 +31,11 @@ public class GameBoardController implements EventHandler<ActionEvent>{
     private Button prevButton;
     GameBoard gameBoard;
     Image imageRedBlock = new Image("file:res/red.png");
-    Image imageGreenBlock = new Image("file:res/green.png");
     Image imageGrayBlock = new Image("file:res/gray.png");
 
     BackgroundImage backgroundRed = new BackgroundImage( imageRedBlock, BackgroundRepeat.NO_REPEAT,
                                                                         BackgroundRepeat.NO_REPEAT,
                                                                         BackgroundPosition.DEFAULT,
-                                                                            BackgroundSize.DEFAULT);
-    BackgroundImage backgroundGreen = new BackgroundImage( imageGreenBlock, BackgroundRepeat.NO_REPEAT,
-                                                                            BackgroundRepeat.NO_REPEAT,
-                                                                            BackgroundPosition.DEFAULT,
                                                                             BackgroundSize.DEFAULT);
     BackgroundImage backgroundGray = new BackgroundImage( imageGrayBlock, BackgroundRepeat.NO_REPEAT,
                                                                             BackgroundRepeat.NO_REPEAT,
@@ -55,9 +49,19 @@ public class GameBoardController implements EventHandler<ActionEvent>{
         this.gameBoard = new GameBoard(GameBoardConfig.getInstance().generateInitialBoard());
         updateGUI();
 
-        BruteSolver solver = new BruteSolver(gameBoard);
-        solver.solve();
-        steps = new ArrayList(solver.getSteps());
+
+
+
+        if(GameBoardConfig.BRUTE) {
+            BruteSolver solver = new BruteSolver(gameBoard);
+            solver.solve();
+            steps = new ArrayList(solver.getSteps());
+        }else {
+            Pheromones pheromones = new Pheromones();
+            AlgorithmPrototype1 solver = new AlgorithmPrototype1(new GameBoard(SimpleGenerator.generate()), pheromones);
+            Ant ant = solver.run(GameBoardConfig.TRIALS);
+            steps = new ArrayList(ant.getPath());
+        }
         Collections.reverse(steps);
         System.out.println(steps);
     }

@@ -1,5 +1,6 @@
 package solvers.generator;
 
+import controller.GameBoardConfig;
 import model.Block;
 import model.BlockType;
 import model.Position;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class SimpleGenerator {
     public static List<Block> generate() {
+        GameBoardConfig.getInstance("res/configs/simplegameboard.config");
         List<Block> blocks = new ArrayList<>();
         blocks.add(new Block(1, BlockType.HORIZONTAL, 2, new Position(0, 2)));
         blocks.add(new Block(2, BlockType.VERTICAL, 2, new Position(2, 1)));

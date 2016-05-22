@@ -15,6 +15,7 @@ public class GameBoardConfig {
     private static GameBoardConfig instance = null;
     public static int SIZE;
     public static int board[][];
+    public static boolean BRUTE = true;
 
     /* ANT SOLVER PARAMETERS */
     public static int ANT_QUANTITY;
@@ -22,41 +23,51 @@ public class GameBoardConfig {
     // TODO define other parameters
     /* END OF ANT SOLVER PARAMETERS */
 
-    protected GameBoardConfig(String configFilePath) throws IOException {
-        File configFile = new File(configFilePath);
-        FileReader fileReader = new FileReader(configFile);
-        BufferedReader reader = new BufferedReader(fileReader);
-        String[] parsed = reader.readLine().split("="); // SIZE = <integer>
+    protected GameBoardConfig(String configFilePath) {
+        System.out.println("CONFIG LOADED: "+ configFilePath);
+        try {
+            File configFile = new File(configFilePath);
+            FileReader fileReader = new FileReader(configFile);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String[] parsed;
 
-        SIZE = Integer.parseInt(parsed[1].trim());
-        while(!reader.readLine().trim().equals("GAMEBOARD_BEGIN"));
+            parsed = reader.readLine().split("="); // BRUTE = <TRUE / FALSE>
+            BRUTE = Boolean.parseBoolean(parsed[1].trim());
 
-        board = new int[SIZE][SIZE];
 
-        for(int i=0; i<SIZE; i++){
-            parsed = reader.readLine().trim().split("\\s+", SIZE);
-            for(int j=0; j<SIZE; j++){
-                board[i][j] = Integer.parseInt(parsed[j]);
+            parsed = reader.readLine().split("="); // SIZE = <integer>
+            SIZE = Integer.parseInt(parsed[1].trim());
+            while (!reader.readLine().trim().equals("GAMEBOARD_BEGIN")) ;
+
+            board = new int[SIZE][SIZE];
+
+            for (int i = 0; i < SIZE; i++) {
+                parsed = reader.readLine().trim().split("\\s+", SIZE);
+                for (int j = 0; j < SIZE; j++) {
+                    board[i][j] = Integer.parseInt(parsed[j]);
+                }
             }
-        }
 
-        while(!reader.readLine().trim().equals("GAMEBOARD_END"));
+            while (!reader.readLine().trim().equals("GAMEBOARD_END")) ;
         /*
             ==========================================================
                             ANT SOLVER SETTINGS
             ==========================================================
          */
-        while(!reader.readLine().trim().equals("ANT_SETTINGS_BEGIN"));
+            while (!reader.readLine().trim().equals("ANT_SETTINGS_BEGIN")) ;
         /*  ========================================================== */
-        parsed = reader.readLine().split("="); // ANT_QUANTITY = <integer>
-        ANT_QUANTITY = Integer.parseInt(parsed[1].trim());
+            parsed = reader.readLine().split("="); // ANT_QUANTITY = <integer>
+            ANT_QUANTITY = Integer.parseInt(parsed[1].trim());
 
-        parsed = reader.readLine().split("="); // TRIALS = <integer>
-        TRIALS = Integer.parseInt(parsed[1].trim());
+            parsed = reader.readLine().split("="); // TRIALS = <integer>
+            TRIALS = Integer.parseInt(parsed[1].trim());
 
-        // TODO parse here other parameters
+            // TODO parse here other parameters
         /*  ========================================================== */
-        while(!reader.readLine().trim().equals("ANT_SETTINGS_END"));
+            while (!reader.readLine().trim().equals("ANT_SETTINGS_END")) ;
+        }catch (IOException io){
+            io.printStackTrace();
+        }
     }
 
     public static synchronized GameBoardConfig getInstance()  {
@@ -64,12 +75,8 @@ public class GameBoardConfig {
     }
 
     public static synchronized GameBoardConfig getInstance(String configFilePath)  {
-        if( null == instance )
-            try {
-                instance = new GameBoardConfig(configFilePath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if( null == instance || configFilePath != null)
+            instance = new GameBoardConfig(configFilePath);
         return instance;
     }
 

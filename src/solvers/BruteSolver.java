@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Created by throzendar on 16/04/16.
  */
-public class BruteSolver {
+public class BruteSolver{
 
     /**
      * combinations: List of already checked combinations
