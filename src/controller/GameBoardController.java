@@ -20,8 +20,8 @@ import java.util.*;
  * Created by Tomasz Kasprzyk on 2016-04-19.
  */
 public class GameBoardController implements EventHandler<ActionEvent>{
-    private static int xSize = 6;
-    private static int ySize = 6;
+    private static int xSize = GameBoardConfig.SIZE;
+    private static int ySize = GameBoardConfig.SIZE;
     private static double colors[][] = {
             {1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}, {1.0, 1.0, 0.0}, {0.0, 1.0, 1.0}, {1.0, 0.0, 1.0},
             {0.5, 0.5, 0.0}, {0.0, 0.5, 0.5}, {0.5, 0.0, 0.5}, {1.0, 0.5, 0.0}, {0.0, 1.0, 0.5}, {1.0, 0.0, 0.5},
@@ -50,15 +50,10 @@ public class GameBoardController implements EventHandler<ActionEvent>{
     ArrayList<SolutionStep> steps;
     int currentStep = -1;
 
-    public GameBoardController() throws IOException {
+    public GameBoardController(){
         //List<Block> blocks = SimpleGenerator.generate();
         this.gameBoard = new GameBoard(GameBoardConfig.getInstance().generateInitialBoard());
-        System.out.println("GameBoardController.printDump");
-        gameBoard.printDump();
         updateGUI();
-//        gameBoard.move(gameBoard.getBlocks().get(2), 1);
-//        gameBoard.printDump();
-//        System.out.println(gameBoard.canMove(gameBoard.getBlocks().get(2), -3));
 
         BruteSolver solver = new BruteSolver(gameBoard);
         solver.solve();
@@ -71,16 +66,8 @@ public class GameBoardController implements EventHandler<ActionEvent>{
 
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
-                    if (event.getSource() == buttons[j][i]) {
+                    if (event.getSource() == buttons[j][i])
                         System.out.println("x="+i+", y="+j);
-                     /*   if (board[j][i] == 'w') {
-                            buttons[j][i].setGraphic(new ImageView(imageShip));
-                            board[j][i] = 's';
-                        } else {
-                            buttons[j][i].setGraphic(new ImageView(imageWater));
-                            board[j][i] = 'w';
-                        }*/
-                    }
                 }
             }
         if(event.getSource() == nextButton){

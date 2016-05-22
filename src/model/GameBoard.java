@@ -1,11 +1,13 @@
 package model;
 
+import controller.GameBoardConfig;
 import solvers.SolutionStep;
 
+import java.io.IOException;
 import java.util.*;
 
 public class GameBoard {
-    public static int SIZE = 6;
+    public static int SIZE = 10;
     //public static final int SOLUTION_ROW = 2;
     //TODO size changing
 
@@ -13,7 +15,7 @@ public class GameBoard {
     private Map<Integer, Block> blocks;
 
     public GameBoard(List<Block> blocks) {
-        this(blocks, 6);
+        this(blocks, GameBoardConfig.SIZE);
     }
 
     public GameBoard(List<Block> blocks, int size) {

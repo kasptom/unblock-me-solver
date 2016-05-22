@@ -6,8 +6,6 @@ import model.Position;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -35,22 +33,19 @@ public class GameBoardConfig {
                 board[i][j] = Integer.parseInt(parsed[j]);
             }
         }
-    System.out.println("PARSED BOARD----------");
-        for(int i=0; i<SIZE; i++){
-            for(int j=0; j<SIZE; j++){
-                System.out.print(board[i][j]+" ");
-            }
-            System.out.println();
-        }
     }
 
-    public static synchronized GameBoardConfig getInstance() throws IOException {
+    public static synchronized GameBoardConfig getInstance()  {
         return getInstance(null);
     }
 
-    public static synchronized GameBoardConfig getInstance(String configFilePath) throws IOException {
+    public static synchronized GameBoardConfig getInstance(String configFilePath)  {
         if( null == instance )
-            instance = new GameBoardConfig(configFilePath);
+            try {
+                instance = new GameBoardConfig(configFilePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         return instance;
     }
 
@@ -87,13 +82,13 @@ public class GameBoardConfig {
         for(Block block : blocks){
             System.out.print(block);
         }
-
         return blocks;
-
-
     }
 
 
+    public int getSize() {
+        return SIZE;
+    }
 }
 
 class ConfigFileParseException extends Exception{}

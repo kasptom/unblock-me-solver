@@ -1,5 +1,6 @@
 package view;
 
+import controller.GameBoardConfig;
 import controller.GameBoardController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,13 +13,14 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import model.GameBoard;
 
 /**
  * Created by Tomasz Kasprzyk on 2016-04-19.
  */
 public class GameBoardView {
-    private static int xSize = 6;
-    private static int ySize = 6;
+    private static int xSize = GameBoardConfig.SIZE;
+    private static int ySize = GameBoardConfig.SIZE;
     private boolean ready = false;
 
     private int sceneWidth = 600;
