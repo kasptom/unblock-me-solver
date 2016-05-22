@@ -16,6 +16,12 @@ public class GameBoardConfig {
     public static int SIZE;
     public static int board[][];
 
+    /* ANT SOLVER PARAMETERS */
+    public static int ANT_QUANTITY;
+    public static int TRIALS;
+    // TODO define other parameters
+    /* END OF ANT SOLVER PARAMETERS */
+
     protected GameBoardConfig(String configFilePath) throws IOException {
         File configFile = new File(configFilePath);
         FileReader fileReader = new FileReader(configFile);
@@ -33,6 +39,24 @@ public class GameBoardConfig {
                 board[i][j] = Integer.parseInt(parsed[j]);
             }
         }
+
+        while(!reader.readLine().trim().equals("GAMEBOARD_END"));
+        /*
+            ==========================================================
+                            ANT SOLVER SETTINGS
+            ==========================================================
+         */
+        while(!reader.readLine().trim().equals("ANT_SETTINGS_BEGIN"));
+        /*  ========================================================== */
+        parsed = reader.readLine().split("="); // ANT_QUANTITY = <integer>
+        ANT_QUANTITY = Integer.parseInt(parsed[1].trim());
+
+        parsed = reader.readLine().split("="); // TRIALS = <integer>
+        TRIALS = Integer.parseInt(parsed[1].trim());
+
+        // TODO parse here other parameters
+        /*  ========================================================== */
+        while(!reader.readLine().trim().equals("ANT_SETTINGS_END"));
     }
 
     public static synchronized GameBoardConfig getInstance()  {
@@ -83,11 +107,6 @@ public class GameBoardConfig {
             System.out.print(block);
         }
         return blocks;
-    }
-
-
-    public int getSize() {
-        return SIZE;
     }
 }
 

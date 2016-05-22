@@ -1,5 +1,6 @@
 package solvers.ants;
 
+import controller.GameBoardConfig;
 import model.GameBoard;
 
 import java.util.concurrent.*;
@@ -8,7 +9,7 @@ import java.util.concurrent.*;
  * Created by Andrzej Duda on 2016-05-08.
  */
 public class AlgorithmPrototype1 {
-    public static final int ANT_QUANTITY = 50;
+    public static final int ANT_QUANTITY = GameBoardConfig.ANT_QUANTITY;
 
     private GameBoard initialState;
     private Pheromones pheromones;
