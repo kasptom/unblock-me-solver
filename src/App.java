@@ -10,6 +10,7 @@ import java.io.IOException;
  */
 public class App extends Application {
     private Stage primaryStage;
+    private static String configFileName;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -19,12 +20,18 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        if(args.length > 0)
+            configFileName = args[0].trim();
+        else{
+            System.out.println("USAGE: App <config file name in res/configs/ directory>");
+            System.exit(1);
+        }
         launch(args);
     }
 
     private void initRootLayout() throws Exception {
         try {
-            GameBoardConfig.getInstance("res/configs/gameboard.config");
+            GameBoardConfig.getInstance("res/configs/" + configFileName);
             // get layout from view
             GameBoardView gameBoardView = new GameBoardView();
             BorderPane mainLayout = gameBoardView.getMainLayout();
