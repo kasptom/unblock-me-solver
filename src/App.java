@@ -5,6 +5,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.GameBoardView;
 import java.io.IOException;
+import java.util.Locale;
+
 /**
  * Created by throzendar on 16/04/16.
  */
@@ -20,6 +22,7 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
         if(args.length > 0)
             configFileName = args[0].trim();
         else{

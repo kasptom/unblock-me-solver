@@ -61,6 +61,16 @@ public class GameBoardController implements EventHandler<ActionEvent>{
         }
         Collections.reverse(steps);
         System.out.println(steps);
+        System.out.println("BOARD SIZE, ANTS NUMBER, TRIALS NUMBER, INITIAL PHEROMONE, ANT PHEROMONE, DECAY FACTOR, SOLUTION LENGTH");
+        System.out.printf("%10d,%12d,%14d,%18f,%14f,%13f,%16d\n",
+                GameBoardConfig.SIZE,
+                GameBoardConfig.ANT_QUANTITY,
+                GameBoardConfig.TRIALS,
+                GameBoardConfig.DEFAULT_INITIAL_PHEROMONE,
+                GameBoardConfig.PHEROMONE_FOR_ANT,
+                GameBoardConfig.DECAY_FACTOR,
+                steps.size()
+        );
     }
 
     public void handle(ActionEvent event) {
