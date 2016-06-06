@@ -70,7 +70,10 @@ public class Ant {
         return 1.0 - ((double)timestamp)/GameBoardConfig.TRIALS;
     }
     private double getBeta() {
-        return ((double)timestamp)/GameBoardConfig.TRIALS;
+        double x = ((double)timestamp)/GameBoardConfig.TRIALS;
+        x *= x;
+        return x;
+        //return ((double)timestamp)/GameBoardConfig.TRIALS;
     }
 
     public boolean check(){

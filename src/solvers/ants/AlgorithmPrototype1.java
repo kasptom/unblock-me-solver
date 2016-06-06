@@ -67,13 +67,13 @@ public class AlgorithmPrototype1 {
                 e.printStackTrace();
             }
         }
-        Arrays.sort(ants, (x,y) -> -Double.compare(x.solutionQuality(), y.solutionQuality()));
+        //Arrays.sort(ants, (x,y) -> -Double.compare(x.solutionQuality(), y.solutionQuality()));
         Ant winner = ants[0];
         //winner.spread();
-        for(int i=0; i < ants.length*0.1; i++) {
+        /*for(int i=0; i < ants.length*0.1; i++) {
             ants[i].spread();
-        }
-        /*for(Ant a : ants) {
+        }*/
+        for(Ant a : ants) {
             a.spread();
             if(winner == null)
                 winner = a;
@@ -81,7 +81,7 @@ public class AlgorithmPrototype1 {
                 if(a.solutionQuality() > winner.solutionQuality())
                     winner = a;
             }
-        }*/
+        }
         return winner;
     }
 
