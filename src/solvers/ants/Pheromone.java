@@ -15,6 +15,10 @@ public class Pheromone {
      * Time of last intensity's refresh
      */
     private long timestamp;
+    /**
+     * Distance to exit state
+     */
+    private int distance;
 
     public Pheromone() { this(DEFAULT_INITIAL_TIMESTAMP); }
     /**
@@ -53,11 +57,22 @@ public class Pheromone {
     }
 
     /**
+     *
+     * @return last remembered distance to exit state
+     */
+    public synchronized int getDistance() {
+        return distance;
+    }
+
+    /**
      * Adds pheromone
      * @param value Added pheromone's intensity
      * @param timestamp timestamp of operation (for decay purposes)
+     * @param distance distance to exit state
      */
-    public synchronized void add(double value, long timestamp) {
+    public synchronized void add(double value, long timestamp, int distance) {
+        if(this.distance > distance)
+            this.distance = distance;
         if(timestamp == this.timestamp)
             this.value += value;
         else if (timestamp < this.timestamp)
