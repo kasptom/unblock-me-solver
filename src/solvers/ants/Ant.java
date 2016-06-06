@@ -70,7 +70,9 @@ public class Ant {
     public void spread(){
         //ROZKLADANIE FEROMONOW
         double pheromoneAdd = PHEROMONE_FOR_ANT / memory.size();
+//        pheromoneAdd = Math.tan(1.5*pheromoneAdd);
         pheromoneAdd *= pheromoneAdd;
+//        pheromoneAdd = Math.sin(pheromoneAdd);
         for(int i=1; i < memory.size(); i++) {
             Pheromone p = pheromones.get(memory.get(i - 1), memory.get(i));
             if(p == null)
