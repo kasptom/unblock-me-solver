@@ -1,5 +1,6 @@
 package solvers.ants;
 
+import controller.GameBoardConfig;
 import model.GameBoard;
 import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
@@ -10,7 +11,7 @@ import java.util.*;
  * Created by Tomasz Kasprzyk on 2016-05-01.
  */
 public class Ant {
-    public static double PHEROMONE_FOR_ANT = 1.0;
+    public static double PHEROMONE_FOR_ANT = GameBoardConfig.PHEROMONE_FOR_ANT;
 
     Pheromones pheromones;
     private GameBoard currentState;// = new GameBoard(SimpleGenerator.generate());

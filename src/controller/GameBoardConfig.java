@@ -20,6 +20,10 @@ public class GameBoardConfig {
     /* ANT SOLVER PARAMETERS */
     public static int ANT_QUANTITY;
     public static int TRIALS;
+    public static double DEFAULT_INITIAL_PHEROMONE;
+    public static long DEFAULT_INITIAL_TIMESTAMP;
+    public static double DECAY_FACTOR;
+    public static double PHEROMONE_FOR_ANT;
     // TODO define other parameters
     /* END OF ANT SOLVER PARAMETERS */
 
@@ -61,6 +65,18 @@ public class GameBoardConfig {
 
             parsed = reader.readLine().split("="); // TRIALS = <integer>
             TRIALS = Integer.parseInt(parsed[1].trim());
+
+            parsed = reader.readLine().split("="); //DEFAULT_INITIAL_PHEROMONE = <double>
+            DEFAULT_INITIAL_PHEROMONE = Double.parseDouble(parsed[1].trim());
+
+            parsed = reader.readLine().split("=");
+            DEFAULT_INITIAL_TIMESTAMP = Long.parseLong(parsed[1].trim());
+
+            parsed = reader.readLine().split("=");
+            DECAY_FACTOR = Double.parseDouble(parsed[1].trim());
+
+            parsed = reader.readLine().split("=");
+            PHEROMONE_FOR_ANT = Double.parseDouble(parsed[1].trim());
 
             // TODO parse here other parameters
         /*  ========================================================== */

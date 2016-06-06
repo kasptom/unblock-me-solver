@@ -24,7 +24,7 @@ public class App extends Application {
 
     private void initRootLayout() throws Exception {
         try {
-            GameBoardConfig.getInstance("res/configs/gameboard2.config");
+            GameBoardConfig.getInstance("res/configs/gameboard.config");
             // get layout from view
             GameBoardView gameBoardView = new GameBoardView();
             BorderPane mainLayout = gameBoardView.getMainLayout();

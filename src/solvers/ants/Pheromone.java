@@ -1,9 +1,11 @@
 package solvers.ants;
 
+import controller.GameBoardConfig;
+
 public class Pheromone {
-    public static final double DEFAULT_INITIAL_PHEROMONE = 0.1;
-    public static final long DEFAULT_INITIAL_TIMESTAMP = 0L;
-    public static final double DECAY_FACTOR = 0.9;
+    public static final double DEFAULT_INITIAL_PHEROMONE = GameBoardConfig.DEFAULT_INITIAL_PHEROMONE;
+    public static final long DEFAULT_INITIAL_TIMESTAMP = GameBoardConfig.DEFAULT_INITIAL_TIMESTAMP;
+    public static final double DECAY_FACTOR = GameBoardConfig.DECAY_FACTOR;
 
     /**
      * Pheromone's intensity
