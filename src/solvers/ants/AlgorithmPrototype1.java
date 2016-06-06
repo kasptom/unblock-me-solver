@@ -36,10 +36,13 @@ public class AlgorithmPrototype1 {
         Ant result = null;
         while(timestamp < trials) {
             System.out.println("Generation: " + timestamp);
-            result = unleashAnthill();
-            System.out.println("result: " + result.getPath().size());
+            Ant pretender = unleashAnthill();
+            if(result == null || (result.solutionQuality() < pretender.solutionQuality()))
+                result = pretender;
+            System.out.println("\n\t\t\tresult: " + pretender.getPath().size());
             timestamp++;
         }
+        System.out.println("\nFinal result: " + result.getPath().size());
 //        System.out.println("result: " + result.getPath().size());
         return result;
     }
@@ -64,9 +67,8 @@ public class AlgorithmPrototype1 {
                 e.printStackTrace();
             }
         }
-        Ant winner = null;
         Arrays.sort(ants, (x,y) -> -Double.compare(x.solutionQuality(), y.solutionQuality()));
-        winner = ants[0];
+        Ant winner = ants[0];
         //winner.spread();
         for(int i=0; i < ants.length*0.1; i++) {
             ants[i].spread();

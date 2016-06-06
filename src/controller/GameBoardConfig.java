@@ -24,6 +24,7 @@ public class GameBoardConfig {
     public static long DEFAULT_INITIAL_TIMESTAMP;
     public static double DECAY_FACTOR;
     public static double PHEROMONE_FOR_ANT;
+    public static int DEFAULT_INITIAL_DISTANCE;
     // TODO define other parameters
     /* END OF ANT SOLVER PARAMETERS */
 
@@ -77,6 +78,9 @@ public class GameBoardConfig {
 
             parsed = reader.readLine().split("=");
             PHEROMONE_FOR_ANT = Double.parseDouble(parsed[1].trim());
+
+            parsed = reader.readLine().split("=");
+            DEFAULT_INITIAL_DISTANCE = Integer.parseInt(parsed[1].trim());
 
             // TODO parse here other parameters
         /*  ========================================================== */

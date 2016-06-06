@@ -6,6 +6,7 @@ import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Tomasz Kasprzyk on 2016-05-01.
@@ -38,11 +39,14 @@ public class Ant {
         Map<GameBoard, Double> probabilities = new HashMap<>();
 
         for(Map.Entry<GameBoard, SolutionStep> step : steps.entrySet())
-            probabilities.put(step.getKey(), pheromones.check(timestamp, currentState, step.getKey()));
+            probabilities.put(step.getKey(), getSingleProbability(pheromones.safeGet(currentState, step.getKey())));
         memory.add(currentState);
         currentState = chooseWithProbability(probabilities);
         path.push(steps.get(currentState));
         return false;
+    }
+    private double getSingleProbability(Pheromone p) {
+        return Math.pow(p.get(timestamp), getAlpha()) + Math.pow(1.0/p.getDistance(), getBeta());
     }
     private GameBoard chooseWithProbability(Map<GameBoard, Double> probabilities) {
         //WZOREK NA PRAWDOPODOBIENSTWO
@@ -62,6 +66,12 @@ public class Ant {
                 + " \tprobs count: " + probabilities.values().size() + "\n"
                 + " \tsum: " + sum + "\n}");
     }
+    private double getAlpha() {
+        return 1.0 - ((double)timestamp)/GameBoardConfig.TRIALS;
+    }
+    private double getBeta() {
+        return ((double)timestamp)/GameBoardConfig.TRIALS;
+    }
 
     public boolean check(){
         return this.currentState.isFinished();
@@ -73,7 +83,7 @@ public class Ant {
 //        pheromoneAdd = Math.tan(1.5*pheromoneAdd);
         pheromoneAdd *= pheromoneAdd;
 //        pheromoneAdd = Math.sin(pheromoneAdd);
-        for(int i = memory.size()-1; i >= 1; i++) {
+        for(int i = memory.size()-1; i >= 1; i--) {
             Pheromone p = pheromones.get(memory.get(i-1), memory.get(i));
             if(p == null)
                 throw new RuntimeException("[EE] Ant.spread(): Failed to get pheromone!");

@@ -24,11 +24,28 @@ public class Pheromones {
         Pheromone p = get(gb1, gb2);
         if(p != null)
             return p.get(timestamp);
+        p = new Pheromone();
         synchronized (this) { //MOZE BYC BLAD
-            p = new Pheromone(timestamp);
             pheromones.put(new GBPair(gb1, gb2), p);
-            return p.get(timestamp);
         }
+        return p.get(timestamp);
+    }
+
+    /**
+     * Returns pheromones between gb1 and gb2. If there is none, creates one.
+     * @param gb1
+     * @param gb2
+     * @return
+     */
+    public Pheromone safeGet(GameBoard gb1, GameBoard gb2) {
+        Pheromone p = get(gb1, gb2);
+        if(p != null)
+            return p;
+        p = new Pheromone();
+        synchronized (this) {
+            pheromones.put(new GBPair(gb1, gb2), p);
+        }
+        return p;
     }
 
     /**

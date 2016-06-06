@@ -5,6 +5,7 @@ import controller.GameBoardConfig;
 public class Pheromone {
     public static final double DEFAULT_INITIAL_PHEROMONE = GameBoardConfig.DEFAULT_INITIAL_PHEROMONE;
     public static final long DEFAULT_INITIAL_TIMESTAMP = GameBoardConfig.DEFAULT_INITIAL_TIMESTAMP;
+    public static final int DEFAULT_INITIAL_DISTANCE = GameBoardConfig.DEFAULT_INITIAL_DISTANCE;
     public static final double DECAY_FACTOR = GameBoardConfig.DECAY_FACTOR;
 
     /**
@@ -32,6 +33,7 @@ public class Pheromone {
     public Pheromone(double value, long initalTimestamp) {
         this.value = value;
         this.timestamp = initalTimestamp;
+        this.distance = DEFAULT_INITIAL_DISTANCE;
     }
 
     /**
