@@ -1,7 +1,9 @@
 package model;
 
+import controller.GameBoardConfig;
 import solvers.SolutionStep;
 
+import java.io.IOException;
 import java.util.*;
 
 public class GameBoard {
@@ -13,7 +15,7 @@ public class GameBoard {
     private Map<Integer, Block> blocks;
 
     public GameBoard(List<Block> blocks) {
-        this(blocks, 6);
+        this(blocks, GameBoardConfig.SIZE);
     }
 
     public GameBoard(List<Block> blocks, int size) {

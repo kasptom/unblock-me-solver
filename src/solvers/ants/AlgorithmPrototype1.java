@@ -1,14 +1,17 @@
 package solvers.ants;
 
+import controller.GameBoardConfig;
 import model.GameBoard;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.concurrent.*;
 
 /**
  * Created by Andrzej Duda on 2016-05-08.
  */
 public class AlgorithmPrototype1 {
-    public static final int ANT_QUANTITY = 50;
+    public static final int ANT_QUANTITY = GameBoardConfig.ANT_QUANTITY;
 
     private GameBoard initialState;
     private Pheromones pheromones;
@@ -37,6 +40,7 @@ public class AlgorithmPrototype1 {
             System.out.println("result: " + result.getPath().size());
             timestamp++;
         }
+//        System.out.println("result: " + result.getPath().size());
         return result;
     }
 
@@ -61,7 +65,13 @@ public class AlgorithmPrototype1 {
             }
         }
         Ant winner = null;
-        for(Ant a : ants) {
+        Arrays.sort(ants, (x,y) -> -Double.compare(x.solutionQuality(), y.solutionQuality()));
+        winner = ants[0];
+        //winner.spread();
+        for(int i=0; i < ants.length*0.1; i++) {
+            ants[i].spread();
+        }
+        /*for(Ant a : ants) {
             a.spread();
             if(winner == null)
                 winner = a;
@@ -69,9 +79,11 @@ public class AlgorithmPrototype1 {
                 if(a.solutionQuality() > winner.solutionQuality())
                     winner = a;
             }
-        }
+        }*/
         return winner;
     }
+
+
 
 
     public Ant createAnt() { return new Ant(pheromones, initialState, timestamp); }

@@ -1,5 +1,6 @@
 package solvers.ants;
 
+import controller.GameBoardConfig;
 import model.GameBoard;
 import solvers.SolutionStep;
 import solvers.generator.SimpleGenerator;
@@ -10,7 +11,7 @@ import java.util.*;
  * Created by Tomasz Kasprzyk on 2016-05-01.
  */
 public class Ant {
-    public static double PHEROMONE_FOR_ANT = 1.0;
+    public static double PHEROMONE_FOR_ANT = GameBoardConfig.PHEROMONE_FOR_ANT;
 
     Pheromones pheromones;
     private GameBoard currentState;// = new GameBoard(SimpleGenerator.generate());
@@ -69,7 +70,9 @@ public class Ant {
     public void spread(){
         //ROZKLADANIE FEROMONOW
         double pheromoneAdd = PHEROMONE_FOR_ANT / memory.size();
+//        pheromoneAdd = Math.tan(1.5*pheromoneAdd);
         pheromoneAdd *= pheromoneAdd;
+//        pheromoneAdd = Math.sin(pheromoneAdd);
         for(int i=1; i < memory.size(); i++) {
             Pheromone p = pheromones.get(memory.get(i - 1), memory.get(i));
             if(p == null)
@@ -88,4 +91,5 @@ public class Ant {
         Collections.reverse(antSteps);
         System.out.println(antSteps);
     }
+
 }
